@@ -3,14 +3,14 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin <ACCOUNTID>.dkr.ecr.ap-south-1.amazonaws.com
+      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y4f5a6u0
   build:
     commands:
-      - docker build -t mynode:latest .
-      - docker tag mynode:latest <ECR-REPO-NAME>
+      - docker build -t my-repos .
+      - docker tag my-repos:latest public.ecr.aws/y4f5a6u0/my-repos:latest
   post_build:
     commands:
-      - docker push <ECR-REPO-NAME>
-      - printf '[{"name":"mynode","imageUri":"%s"}]' <ECR-REPo-NAME> > imagedefinitions.json
+      - docker push public.ecr.aws/y4f5a6u0/my-repos:latest
+      - printf '[{"name":"myrepos","imageUri":"%s"}]' public.ecr.aws/y4f5a6u0/my-repos:latest > imagedefinitions.jso
 artifacts:
   files: imagedefinitions.json
