@@ -6,7 +6,7 @@ phases:
       - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y4f5a6u0
   build:
     commands:
-      - docker build -t my-repos .
+      - docker build -t my-repos:latest .
       - docker tag my-repos:latest public.ecr.aws/y4f5a6u0/my-repos:latest
   post_build:
     commands:
